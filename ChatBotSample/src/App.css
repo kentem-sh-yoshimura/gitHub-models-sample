@@ -14,7 +14,7 @@ main {
 
 .message-area {
   padding: 16px;
-  width: 1080px;
+  width: calc(100dvw - 32px);
   height: calc(100dvh - 152px);
   display: flex;
   flex-direction: column;
@@ -39,6 +39,7 @@ main {
 
 .react-markdown > * {
   margin: 0;
+  word-break: keep-all;
 }
 
 .react-markdown > pre {
