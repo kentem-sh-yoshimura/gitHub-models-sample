@@ -1,0 +1,11 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "EndPoint": "https://models.inference.ai.azure.com",
+  "ApiKey": "<GitHubのトークン>"
+}
