@@ -14,12 +14,12 @@ main {
 }
 
 .message-area {
-  padding: 16px;
-  width: calc(100dvw - 32px);
-  height: calc(100dvh - 168px);
+  padding: 24px;
+  width: calc(100dvw - 48px);
+  height: calc(100dvh - 200px);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 16px;
   overflow-y: scroll;
   border-radius: 8px;
 }
@@ -30,6 +30,12 @@ main {
   gap: 8px;
   padding: 16px;
   border-radius: 8px;
+  max-width: 80dvw;
+}
+
+img {
+  height: 256px;
+  width: auto;
 }
 
 .react-markdown {
@@ -65,7 +71,7 @@ main {
 }
 
 .face-icon {
-  font-size: 40px;
+  font-size: 48px;
 }
 
 .chat-form {
@@ -90,7 +96,7 @@ textarea {
   letter-spacing: 1px;
 }
 
-.button-area {
+.v-flex {
   display: flex;
   flex-direction: column;
   gap: 8px;
