@@ -3,6 +3,7 @@ body {
   height: 100%;
   width: 100%;
   font-size: 24px;
+  letter-spacing: 1px;
   background-color: lightyellow;
 }
 
@@ -15,7 +16,7 @@ main {
 .message-area {
   padding: 16px;
   width: calc(100dvw - 32px);
-  height: calc(100dvh - 152px);
+  height: calc(100dvh - 168px);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -48,14 +49,19 @@ main {
   border-radius: 8px;
 }
 
-.user-message {
-  align-self: end;
-  background-color: lightskyblue;
+.first-assistant-message {
+  align-self: center;
+  background-color: lightpink;
 }
 
 .assistant-message {
   align-self: start;
   background-color: lightpink;
+}
+
+.user-message {
+  align-self: end;
+  background-color: lightskyblue;
 }
 
 .face-icon {
@@ -73,19 +79,30 @@ main {
   border-radius: 8px;
 }
 
-input {
+textarea {
   width: 400px;
-  height: 32px;
+  min-height: 80px;
+  max-height: 160px;
+  field-sizing: content;
+  padding: 8px;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+.button-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 button {
-  width: 64px;
+  width: 88px;
   height: 32px;
   border: 1px solid black;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 20px;
+  letter-spacing: 1px;
 }
 
 /* #root {

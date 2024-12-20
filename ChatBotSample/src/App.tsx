@@ -19,6 +19,11 @@ const AOAI_ENDPOINT = import.meta.env["VITE_AOAI_ENDPOINT"];
 const AOAI_APIKEY = import.meta.env["VITE_AOAI_APIKEY"];
 const MODEL_NAME = "gpt-4o-mini";
 
+const ASSISTANT_ICON = "🥷";
+const USER_ICON = "🥺";
+const SYSTEM_MESSAGE = "あなたは忍者風の口調で喋るチャットボットです。";
+const FIRST_ASSISTANT_MESSAGE = "よくきたな！ゆっくりしていくとよいぞ！";
+
 const App = () => {
   const [messages, setMessages] = useState<Array<Messages>>([]);
   const [streamMessage, setStreamMessage] = useState<string | undefined>();
@@ -48,7 +53,7 @@ const App = () => {
           messages: [
             {
               role: "system",
-              content: "あなたは皮肉的な口調で喋るチャットボットです。",
+              content: SYSTEM_MESSAGE,
             },
             ...messages,
             { role: "user", content: data.userMessage },
@@ -111,9 +116,9 @@ const App = () => {
     <main>
       <div className="message-area">
         {!messages.length && (
-          <span className="message assistant-message">
-            <span className="face-icon">🤣</span>
-            こんにちは！暇なんですか？お話しますか？
+          <span className="message first-assistant-message">
+            <span className="face-icon">{ASSISTANT_ICON}</span>
+            {FIRST_ASSISTANT_MESSAGE}
           </span>
         )}
         {messages.map((x, i) => (
@@ -135,10 +140,10 @@ const App = () => {
             }
           >
             <span className="face-icon">
-              {x.role === "assistant" ? "🤣" : "🥺"}
+              {x.role === "assistant" ? ASSISTANT_ICON : USER_ICON}
             </span>
             <ReactMarkdown className="react-markdown">
-              {x.content}
+              {x.content.replace(/\n/g, "  \n")}
             </ReactMarkdown>
           </span>
         ))}
@@ -153,7 +158,7 @@ const App = () => {
               });
             }}
           >
-            <span className="face-icon">🤣</span>
+            <span className="face-icon">{ASSISTANT_ICON}</span>
             <ReactMarkdown className="react-markdown">
               {streamMessage}
             </ReactMarkdown>
@@ -161,13 +166,29 @@ const App = () => {
         )}
       </div>
       <form className="chat-form" onSubmit={handleSubmit(callAOAI)}>
-        <span className="face-icon">🥺</span>
+        <span className="face-icon">{USER_ICON}</span>
         {(() => {
           const { ref, ...rest } = register("userMessage");
           return (
-            <input
-              type="text"
+            <textarea
               autoComplete="off"
+              onKeyDown={(e) => {
+                if (e.key !== "Enter") return;
+
+                if (!e.altKey) {
+                  handleSubmit(callAOAI)();
+                  return;
+                }
+
+                e.preventDefault();
+                const { selectionStart, selectionEnd, value } = e.currentTarget;
+                e.currentTarget.value =
+                  value.slice(0, selectionStart) +
+                  "\n" +
+                  value.slice(selectionEnd);
+                e.currentTarget.selectionStart = selectionStart + 1;
+                e.currentTarget.selectionEnd = selectionStart + 1;
+              }}
               {...rest}
               disabled={isSubmitting}
               ref={(e) => {
@@ -177,20 +198,22 @@ const App = () => {
             />
           );
         })()}
-        <button type="submit" disabled={isSubmitting}>
-          送信
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            reset();
-            setMessages([]);
-            setStreamMessage(undefined);
-          }}
-          disabled={isSubmitting}
-        >
-          クリア
-        </button>
+        <div className="button-area">
+          <button type="submit" disabled={isSubmitting}>
+            送信
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              reset();
+              setMessages([]);
+              setStreamMessage(undefined);
+            }}
+            disabled={isSubmitting}
+          >
+            クリア
+          </button>
+        </div>
       </form>
     </main>
   );
